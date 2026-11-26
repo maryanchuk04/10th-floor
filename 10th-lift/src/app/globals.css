@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f6f7fb;
+  --fg: #0f172a;
+  --card: #ffffff;
+  --border: #e5e7ef;
+  --muted: #64748b;
+  --ok: #059669;
+  --ok-bg: #d1fae5;
+  --bad: #dc2626;
+  --bad-bg: #fee2e2;
+  --accent: #4f46e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1020;
+    --fg: #e8ecf8;
+    --card: #141b30;
+    --border: #232c48;
+    --muted: #94a3c0;
+    --ok: #34d399;
+    --ok-bg: #064e3b;
+    --bad: #f87171;
+    --bad-bg: #4c1414;
+    --accent: #818cf8;
+  }
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --font-sans: var(--font-geist-sans);
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px -15px rgb(0 0 0 / 0.2);
+  transition: transform 0.2s;
+}
+.card-ok::before,
+.card-bad::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+}
+.card-ok::before { background: var(--ok); }
+.card-bad::before { background: var(--bad); }
+.card-bad { background: linear-gradient(180deg, var(--bad-bg), var(--card) 60%); }
+.card-ok { background: linear-gradient(180deg, var(--ok-bg), var(--card) 60%); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  padding: 0.85rem 1.1rem;
+  font-weight: 700;
+  transition: transform 0.1s, opacity 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.6; cursor: wait; }
+.btn-bad { background: var(--bad); color: #fff; }
+.btn-ok { background: var(--ok); color: #fff; }
+@media (prefers-color-scheme: dark) {
+  .btn-ok, .btn-bad { color: #0b1020; }
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { border: 1px solid var(--border); background: transparent; }
+.btn-ghost:hover { background: var(--bg); }
+
+.input {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 0.8rem 1rem;
+  outline: none;
+}
+.input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+
+.chip {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.chip-on { background: var(--accent); color: #fff; border-color: transparent; }
+
+.dot { width: 10px; height: 10px; border-radius: 999px; background: var(--muted); }
+.dot-live { background: var(--ok); box-shadow: 0 0 0 0 var(--ok); animation: pulse 2s infinite; }
+
+.feed-item {
+  display: flex;
+  gap: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 0.8rem 1rem;
+}
+
+.skeleton { animation: shimmer 1.4s infinite alternate; }
+
+.ping { border: 3px solid var(--bad); animation: ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.pop { animation: pop 0.2s ease-out; }
+
+@keyframes pulse { 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@keyframes ping { 75%, 100% { transform: scale(1.5); opacity: 0; } }
+@keyframes pop { from { transform: translateY(12px) scale(0.98); opacity: 0; } }
+@keyframes shimmer { to { opacity: 0.5; } }
